@@ -83,10 +83,12 @@ const AllUsers = () => {
                                 <td>{user.status}</td>
                                 <td>
                                     <div className="join space-x-3">
-                                        <button className="btn join-item">
-                                            <FaEdit
-                                            size={20} color='#155dfc'></FaEdit>
-                                        </button>
+                                        <Link to={`/update-user/${user._id}`}>
+                                            <button className="btn join-item">
+                                                <FaEdit
+                                                size={20} color='#155dfc'></FaEdit>
+                                            </button>
+                                        </Link>
                                         <button 
                                         onClick={()=> handleDelete(user._id)}
                                         className="btn join-item">
