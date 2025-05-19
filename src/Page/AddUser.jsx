@@ -3,8 +3,34 @@ import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { Link } from 'react-router';
 
 const AddUser = () => {
+
+
+    // Handle Add User
+    const handleAddUser = (e) => {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+        const newUserData = Object.fromEntries(formData.entries());
+        console.log(newUserData);
+         
+        // Send Data to DB
+        fetch('http://localhost:8000/users', {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(newUserData)
+        })
+        .then( res => res.json() )
+        .then( data => {
+            console.log("After Added data : ", data);
+            
+        } )
+    }
+
     return (
-        <div className='my-20 mx-5 lg:mx-0'>
+        <div className='my-20 px-5 lg:px-0'>
                 <Link to="/">
                     <button className="btn text-2xl text-blue-600">
                     <MdKeyboardDoubleArrowLeft />
@@ -18,7 +44,7 @@ const AddUser = () => {
                     </div>
 
                     {/* Form */}
-                    <form action="" className='my-10'>
+                    <form onSubmit={handleAddUser} className='my-10'>
                         <fieldset className="fieldset">
                             {/* Name */}
                             <legend className="fieldset-legend text-xl">Name</legend>
@@ -58,7 +84,7 @@ const AddUser = () => {
                             </div>
 
                             {/* Submit */}
-                            <button className="btn btn-block bg-green-300 text-xl mt-6">Save</button>
+                            <button type='submit' className="btn btn-block bg-green-300 text-xl mt-6">Save</button>
 
                         </fieldset>
                     </form>
