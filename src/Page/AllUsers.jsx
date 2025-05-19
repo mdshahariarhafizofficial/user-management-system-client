@@ -2,12 +2,47 @@ import React, { useState } from 'react';
 import { FaEdit, FaUser } from 'react-icons/fa';
 import { IoIosCloseCircle } from 'react-icons/io';
 import { Link, useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
 
 const AllUsers = () => {
     const instantUser = useLoaderData();
     const [users, setUsers] = useState(instantUser);
     console.log(instantUser);
-    
+
+    // Delete a User
+    const handleDelete = (id) => {
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+        if (result.isConfirmed) {
+            
+            // Delete user
+            fetch(`http://localhost:8000/users/${id}`,{
+                method: "DELETE"
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount) {
+                    const remainingUser = users.filter( user => user._id !== id);
+                    setUsers(remainingUser)
+                                Swal.fire({
+                                title: "Deleted!",
+                                text: "User has been deleted!",
+                                icon: "success",
+                                timer: 1500
+                                });
+                }
+                
+            })
+        }
+        });
+    }
 
     return (
         <div className='my-20'>
@@ -52,7 +87,9 @@ const AllUsers = () => {
                                             <FaEdit
                                             size={20} color='#155dfc'></FaEdit>
                                         </button>
-                                        <button className="btn join-item">
+                                        <button 
+                                        onClick={()=> handleDelete(user._id)}
+                                        className="btn join-item">
                                             <IoIosCloseCircle  size={22} color='red' />
                                         </button>
                                     </div>
