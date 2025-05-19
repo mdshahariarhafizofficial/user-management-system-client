@@ -10,7 +10,9 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
+                loader: () => fetch('http://localhost:8000/users'),
                 Component: AllUsers,
+                hydrateFallbackElement: <p>Loader...........</p>
             },
             {
                 path: '/add-user',

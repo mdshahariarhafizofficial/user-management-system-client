@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaEdit, FaUser } from 'react-icons/fa';
 import { IoIosCloseCircle } from 'react-icons/io';
-import { Link } from 'react-router';
+import { Link, useLoaderData } from 'react-router';
 
 const AllUsers = () => {
+    const instantUser = useLoaderData();
+    const [users, setUsers] = useState(instantUser);
+    console.log(instantUser);
+    
+
     return (
         <div className='my-20'>
             <div>
@@ -28,13 +33,19 @@ const AllUsers = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {/* row 1 */}
-                            <tr>
-                                <th>1</th>
-                                <td>Cy Ganderton</td>
-                                <td>Quality Control Specialist</td>
-                                <td>Male</td>
-                                <td>Active</td>
+
+                            {/* Row */}
+
+                            {
+                                users.map( (user ,index) => 
+                            <tr key={index}>
+                                <th>{
+                                    index+1
+                                    }</th>
+                                <td>{user.name}</td>
+                                <td>{user.email}</td>
+                                <td>{user.gender}</td>
+                                <td>{user.status}</td>
                                 <td>
                                     <div className="join space-x-3">
                                         <button className="btn join-item">
@@ -46,7 +57,10 @@ const AllUsers = () => {
                                         </button>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> 
+                                )    
+                            }
+
                             </tbody>
                         </table>
                         </div>
