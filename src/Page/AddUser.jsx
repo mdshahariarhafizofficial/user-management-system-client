@@ -1,6 +1,7 @@
 import React from 'react';
 import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 import { Link } from 'react-router';
+import Swal from 'sweetalert2';
 
 const AddUser = () => {
 
@@ -24,9 +25,15 @@ const AddUser = () => {
         })
         .then( res => res.json() )
         .then( data => {
-            console.log("After Added data : ", data);
-            
+            if (data.insertedId) {
+                Swal.fire({
+                title: "User Added Successfully!",
+                icon: "success",
+                timer: 1500,
+                });
+            }
         } )
+        form.reset();
     }
 
     return (
