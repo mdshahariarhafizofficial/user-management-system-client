@@ -3,6 +3,7 @@ import Root from "../Layout/Root";
 import AllUsers from "../Page/AllUsers";
 import AddUser from "../Page/AddUser";
 import UpdateUserInfo from "../Page/UpdateUserInfo";
+import Loading from "../Page/Loading";
 
 const router = createBrowserRouter([
     {
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
                 index: true,
                 loader: () => fetch('http://localhost:8000/users'),
                 Component: AllUsers,
-                hydrateFallbackElement: <p>Loader...........</p>
+                hydrateFallbackElement: <Loading></Loading>
             },
             {
                 path: '/add-user',
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
                 path: '/update-user/:id',
                 loader: ({params}) => fetch(`http://localhost:8000/users/${params.id}`),
                 Component: UpdateUserInfo,
-                hydrateFallbackElement: <p>Loader...........</p>
+                hydrateFallbackElement: <Loading></Loading>
             }
 
         ]
